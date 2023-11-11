@@ -11,12 +11,12 @@ namespace Booking.WebApp.Repositories
             db = context;
         }
 
-        public Task CreateUser(UserVM userVM) {
-            var existingUser = this.db.Users.FirstOrDefault(u => u.Email == userVM.Email);
+        public Task CreateUser(RegisterVM registerVM) {
+            var existingUser = this.db.Users.FirstOrDefault(u => u.Email == registerVM.Email);
             if (existingUser == null) {
                 User newUser = new User {
-                    Email = userVM.Email,
-                    Password = userVM.Password,
+                    Email = registerVM.Email,
+                    Password = registerVM.Password,
                     TotalCredit = 10
                 };
                 this.db.Users.Add(newUser);

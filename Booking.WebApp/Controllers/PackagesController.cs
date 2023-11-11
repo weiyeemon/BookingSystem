@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Booking.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Booking.WebApp.Controllers {
     public class PackagesController : Controller
@@ -11,7 +12,7 @@ namespace Booking.WebApp.Controllers {
         {
             _context = context;
         }
-
+        //[Authorize]
         // GET: Packages
         public async Task<IActionResult> Index()
         {
@@ -38,27 +39,8 @@ namespace Booking.WebApp.Controllers {
             return View(package);
         }
 
-        // GET: Packages/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Packages/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Country,Credit,StartTime,EndTime")] Package package)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(package);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(package);
-        }
+       
+        
 
         // GET: Packages/Edit/5
         public async Task<IActionResult> Edit(int? id)
