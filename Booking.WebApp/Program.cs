@@ -19,25 +19,17 @@ builder.Services.AddDbContext<BookingDBContext>(o => {
 });
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//}).AddJwtBearer(options =>
-//{
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
 //    options.TokenValidationParameters = new TokenValidationParameters {
-//        ValidateIssuerSigningKey = false,
-//        ValidateIssuer = false,
-//        ValidateAudience = false,
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("3be6bcc4c774d569a4af1a1159e82f134ac3b75c108589995dc19c4c47cc623b")),
-//        RequireExpirationTime = true,
-//        RequireSignedTokens = true,
+//        ValidateIssuer = true,
+//        ValidateAudience = true,
 //        ValidateLifetime = true,
-//        // Additional configurations can be added as needed
+//        ValidateIssuerSigningKey = true,
+//        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+//        ValidAudience = builder.Configuration["Jwt:Audience"],
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
 //    };
-//});
-
-builder.Services.AddAuthorization();
+//}); 
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment()) {

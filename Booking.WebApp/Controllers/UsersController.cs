@@ -11,9 +11,11 @@ namespace Booking.WebApp.Controllers
 {
     public class UsersController : Controller {
         private readonly IUserRepository _userRepository;
+        private readonly IConfiguration _config;
 
-        public UsersController(IUserRepository userRepository) {
+        public UsersController(IUserRepository userRepository, IConfiguration configuration) {
             _userRepository = userRepository;
+            _config = configuration;
         }
     
         [AllowAnonymous]
@@ -25,9 +27,9 @@ namespace Booking.WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Login(UserVM userVM) {
             if (this._userRepository.ValidateUser(userVM)) {
-                //var jwtToken = GenerateJwtToken(userVM.Email);
+                //var jwtToken = GenerateJwtToken(userVM);
                 //return RedirectToAction("Index", "Packages"  , new { Token= jwtToken });
-                return RedirectToAction("Index", "Packages");
+                 return RedirectToAction("Index", "Packages");
             }
             return View();
         }
@@ -43,20 +45,23 @@ namespace Booking.WebApp.Controllers
            this._userRepository.CreateUser(userVM);
             return RedirectToAction("Index", "Packages");
         }
-        //private string GenerateJwtToken(string username) {
-        //    var tokenHandler = new JwtSecurityTokenHandler();
-        //    var key = Encoding.UTF8.GetBytes("3be6bcc4c774d569a4af1a1159e82f134ac3b75c108589995dc19c4c47cc623b"); // Replace with your secret key
-        //    var tokenDescriptor = new SecurityTokenDescriptor {
-        //        Subject = new ClaimsIdentity(new Claim[]
-        //        {
-        //        new Claim(ClaimTypes.Name, username),
-        //            // Add additional claims as needed
-        //        }),
-        //        Expires = DateTime.UtcNow.AddHours(1), // Adjust expiration as needed
-        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        //private string GenerateJwtToken(UserVM user) {
+        //    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+        //    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+        //    var claims = new[]
+        //    {
+        //        new Claim("Email", user.Email),
         //    };
-        //    var token = tokenHandler.CreateToken(tokenDescriptor);
-        //    return tokenHandler.WriteToken(token);
+        //    var token = new JwtSecurityToken(
+        //        _config["Jwt:Issuer"],
+        //        _config["Jwt:Audience"],
+        //        claims,
+        //        expires: DateTime.Now.AddMinutes(15),
+        //        signingCredentials: credentials);
+
+
+        //    return new JwtSecurityTokenHandler().WriteToken(token);
+
         //}
     }
 }
