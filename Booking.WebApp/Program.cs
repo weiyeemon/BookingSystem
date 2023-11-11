@@ -1,4 +1,6 @@
 using Booking.Model;
+using Booking.WebApp.Repositories;
+using Booking.WebApp.Repositories.interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,7 @@ var connectionString = builder.Configuration["ConnectionString"];
 builder.Services.AddDbContext<BookingDBContext>(o => {
     o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
-
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

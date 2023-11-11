@@ -1,0 +1,26 @@
+﻿@model Booking.WebApp.ViewModels.UserVM
+
+@{
+    ViewBag.Title = "User Login";
+}
+
+<h2>User Login</h2>
+
+@using (Html.BeginForm("Login", "Users", FormMethod.Post)) {
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.LabelFor(model => model.Email)
+        @Html.TextBoxFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email)
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Password)
+        @Html.PasswordFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password)
+    </div>
+
+    <input type="submit" value="Login" />
+}
+
