@@ -1,5 +1,5 @@
 ﻿namespace Booking.WebApp.Core {
     public class Constants {
-        public  const string UserIdCookie = "UserIdCookie";
+        public const string UserIdCookie = "UserIdCookie";
     }
 }

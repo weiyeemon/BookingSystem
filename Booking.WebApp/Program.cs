@@ -1,17 +1,10 @@
 using Booking.Model;
 using Booking.WebApp.Repositories;
 using Booking.WebApp.Repositories.interfaces;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration["ConnectionString"];
 builder.Services.AddDbContext<BookingDBContext>(o => {

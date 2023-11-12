@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+  mysqldb:
+    container_name: mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: $$ecr3t
+    ports:
+    expose:
+      - '3306'
