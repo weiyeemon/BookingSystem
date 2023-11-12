@@ -28,5 +28,8 @@ namespace Booking.WebApp.Repositories
         public bool ValidateUser(UserVM userVM) {
             return this.db.Users.Any(u => u.Email.Equals(userVM.Email) && u.Password.Equals(userVM.Password));
         }
+        public int GetUserIdByEmail(string email) {
+            return this.db.Users.First(u => u.Email == email).Id;
+        }
     }
 }

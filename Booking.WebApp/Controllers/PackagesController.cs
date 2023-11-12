@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Booking.Model;
 using Microsoft.AspNetCore.Authorization;
+using Booking.WebApp.ViewModels;
+using Booking.WebApp.Core;
 
 namespace Booking.WebApp.Controllers {
     public class PackagesController : Controller
@@ -20,30 +22,8 @@ namespace Booking.WebApp.Controllers {
                           View(await _context.Packages.ToListAsync()) :
                           Problem("Entity set 'BookingDBContext.Packages'  is null.");
         }
-
-        // GET: Packages/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Packages == null)
-            {
-                return NotFound();
-            }
-
-            var package = await _context.Packages
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (package == null)
-            {
-                return NotFound();
-            }
-
-            return View(package);
-        }
-
        
-        
-
-        // GET: Packages/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Book(int? id)
         {
             if (id == null || _context.Packages == null)
             {
@@ -58,20 +38,15 @@ namespace Booking.WebApp.Controllers {
             return View(package);
         }
 
-        // POST: Packages/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Country,Credit,StartTime,EndTime")] Package package)
+        public async Task<IActionResult> Book(int id)
         {
-            if (id != package.Id)
-            {
-                return NotFound();
-            }
-
+            var package = await _context.Packages.FindAsync(id);
             if (ModelState.IsValid)
             {
+                string userId = String.Empty;
+                var cookie = Request.Cookies.TryGetValue(Constants.UserIdCookie, out userId);
                 try
                 {
                     _context.Update(package);
@@ -79,7 +54,7 @@ namespace Booking.WebApp.Controllers {
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PackageExists(package.Id))
+                    if (!PackageExists(id))
                     {
                         return NotFound();
                     }
@@ -91,43 +66,6 @@ namespace Booking.WebApp.Controllers {
                 return RedirectToAction(nameof(Index));
             }
             return View(package);
-        }
-
-        // GET: Packages/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Packages == null)
-            {
-                return NotFound();
-            }
-
-            var package = await _context.Packages
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (package == null)
-            {
-                return NotFound();
-            }
-
-            return View(package);
-        }
-
-        // POST: Packages/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Packages == null)
-            {
-                return Problem("Entity set 'BookingDBContext.Packages'  is null.");
-            }
-            var package = await _context.Packages.FindAsync(id);
-            if (package != null)
-            {
-                _context.Packages.Remove(package);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool PackageExists(int id)

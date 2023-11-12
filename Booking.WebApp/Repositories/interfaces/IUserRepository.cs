@@ -1,4 +1,5 @@
-﻿using Booking.WebApp.ViewModels;
+﻿using Booking.Model;
+using Booking.WebApp.ViewModels;
 
 namespace Booking.WebApp.Repositories.interfaces
 {
@@ -6,5 +7,6 @@ namespace Booking.WebApp.Repositories.interfaces
     {
         bool ValidateUser(UserVM userVM);
         Task CreateUser(RegisterVM registerVM);
+        int GetUserIdByEmail(string email);
     }
 }

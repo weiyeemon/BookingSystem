@@ -1,11 +1,14 @@
-﻿using Booking.WebApp.Repositories.interfaces;
+﻿using Booking.WebApp.Core;
+using Booking.WebApp.Repositories.interfaces;
 using Booking.WebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Constants = Booking.WebApp.Core.Constants;
 
 namespace Booking.WebApp.Controllers
 {
@@ -29,11 +32,17 @@ namespace Booking.WebApp.Controllers
             if (this._userRepository.ValidateUser(userVM)) {
                 //var jwtToken = GenerateJwtToken(userVM);
                 //return RedirectToAction("Index", "Packages"  , new { Token= jwtToken });
+                int id = _userRepository.GetUserIdByEmail(userVM.Email);
+                AddUserIdInCookie(id);
                  return RedirectToAction("Index", "Packages");
             }
             return View();
         }
-
+        private void AddUserIdInCookie(int id) {
+            Response.Cookies.Append(Constants.UserIdCookie, id.ToString(), new CookieOptions() {
+                Expires = DateTimeOffset.UtcNow.AddDays(1),
+            });
+        }
         [AllowAnonymous]
         public IActionResult Register() {
             return View();
@@ -45,6 +54,7 @@ namespace Booking.WebApp.Controllers
            this._userRepository.CreateUser(userVM);
             return RedirectToAction("Index", "Packages");
         }
+
         //private string GenerateJwtToken(UserVM user) {
         //    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
         //    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
