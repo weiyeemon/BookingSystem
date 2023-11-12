@@ -14,7 +14,7 @@ namespace Booking.Model {
 
             List<Package> packages = new List<Package>();
             packages.Add(new Package { Id = 1, Name = "Basic", Country = Country.Singapore, Credit = 3, StartTime = DateTime.Now, EndTime = DateTime.Now.AddDays(7) });
-            packages.Add(new Package { Id = 2, Name = "Intermidiate", Country = Country.US, Credit = 2, StartTime = DateTime.Now, EndTime = DateTime.Now.AddDays(7) });
+            packages.Add(new Package { Id = 2, Name = "Intermidiate", Country = Country.English, Credit = 2, StartTime = DateTime.Now, EndTime = DateTime.Now.AddDays(7) });
             packages.Add(new Package { Id = 3, Name = "Basic", Country = Country.Myanmar, Credit = 3, StartTime = DateTime.Now, EndTime = DateTime.Now.AddDays(7) });
 
             modelBuilder.Entity<Package>().HasData(packages);
