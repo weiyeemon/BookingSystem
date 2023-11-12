@@ -7,6 +7,6 @@ namespace Booking.WebApp.Repositories.interfaces
     {
         bool ValidateUser(UserVM userVM);
         Task CreateUser(RegisterVM registerVM);
-        int GetUserIdByEmail(string email);
+        User GetUserByEmail(string email);
     }
 }

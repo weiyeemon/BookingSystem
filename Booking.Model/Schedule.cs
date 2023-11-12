@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Booking.Model {
     public class Schedule {
         public int Id { get; set; }
@@ -10,6 +9,7 @@ namespace Booking.Model {
         [ForeignKey("PackageId")]
         public ScheduleType ScheduleType { get; set; }
         public virtual Package Package { get; set; }
+        //Booking create time
         public DateTime StartTime { get; set; }
     }
 }

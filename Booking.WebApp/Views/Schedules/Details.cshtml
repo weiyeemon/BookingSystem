@@ -1,0 +1,35 @@
+﻿@model Booking.Model.Schedule
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Schedule</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Package)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Package.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ScheduleType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ScheduleType)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Package.StartTime)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

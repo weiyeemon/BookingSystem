@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Booking.Model {
+﻿namespace Booking.Model {
     public enum Country {
         Myanmar,
         Singapore,
         Thailand,
-        US
+        English
     }
 }

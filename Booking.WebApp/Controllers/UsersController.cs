@@ -32,7 +32,7 @@ namespace Booking.WebApp.Controllers
             if (this._userRepository.ValidateUser(userVM)) {
                 //var jwtToken = GenerateJwtToken(userVM);
                 //return RedirectToAction("Index", "Packages"  , new { Token= jwtToken });
-                int id = _userRepository.GetUserIdByEmail(userVM.Email);
+                int id = _userRepository.GetUserByEmail(userVM.Email).Id;
                 AddUserIdInCookie(id);
                  return RedirectToAction("Index", "Packages");
             }

@@ -18,6 +18,7 @@ builder.Services.AddDbContext<BookingDBContext>(o => {
     o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
 //    options.TokenValidationParameters = new TokenValidationParameters {
